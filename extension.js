@@ -33,7 +33,7 @@ var currentState;
 const disableArgs = ["/home/nicolo/disable-wireless-mouse.sh"];
 const enableArgs = ["/home/nicolo/enable-wireless-mouse.sh"];
 
-function _execCommand(args) {
+function _execCommand(args, callback) {
     try {
         let proc = Gio.Subprocess.new(
             ['pkexec'].concat(args),
@@ -45,6 +45,7 @@ function _execCommand(args) {
                 if(!proc.get_successful()){
                     throw new Error(stderr);
                 }
+                callback();
                 log(stdout);
             }catch(e){
                 logError(e);
@@ -57,24 +58,25 @@ function _execCommand(args) {
 
 function _enableMouse (){
     //global.log("_enable");
-    _execCommand(enableArgs);
+    _execCommand(enableArgs, () => {
+        currentState = POWER_ON;
+        panelButtonText.set_text("Disable");
+    });
 }
 function _disableMouse () {
     //global.log("_disable");
-    _execCommand(disableArgs);
+    _execCommand(disableArgs, () => {
+        currentState = POWER_OFF;
+        panelButtonText.set_text("Enable");
+    });
 }
 
 function _toggle () {
     //global.log("toggle");
     if(currentState == POWER_OFF){
         _enableMouse();
-        currentState = POWER_ON;
-        panelButtonText.set_text("Disable");
-
     }else{
         _disableMouse();
-        currentState = POWER_OFF;
-        panelButtonText.set_text("Enable");
     }
 }
 
