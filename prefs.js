@@ -1,12 +1,44 @@
 const GLib = imports.gi.GLib;
 const Gtk = imports.gi.Gtk;
 const GObject = imports.gi.GObject;
+const Gio = imports.gi.Gio;
 
 const ExtensionUtils = imports.misc.extensionUtils;
 const Me = ExtensionUtils.getCurrentExtension();
 
+var prefs = {
+    enablePath: "",
+    disablePath: ""
+}
+var settings;
+
+function getSettings () {
+    let GioSSS = Gio.SettingsSchemaSource;
+    let schemaSrc = GioSSS.new_from_directory(Me.dir.get_child("schemas").get_path(),
+                                                GioSSS.get_default(),
+                                                false);
+    let schemaObj = schemaSrc.lookup('org.gnome.shell.extensions.mouse', true);
+    if(!schemaObj){
+        throw new Error("schema not found");
+    }
+
+    return new Gio.Settings({settings_schema: schemaObj});
+}
+
+function savePrefs () {
+    settings.set_string('enable-path', prefs.enablePath);
+    settings.set_string('disable-path', prefs.disablePath);
+}
+
 function init(){
     log(`init Prefs`);
+    settings = getSettings();
+
+    let enablePath = settings.get_string('enable-path').toString();
+    let disablePath = settings.get_string('disable-path').toString();
+
+    prefs.enablePath = enablePath;
+    prefs.disablePath = disablePath;
 }
 
 function buildPrefsWidget(){
@@ -35,6 +67,10 @@ const PrefsWidget = new GObject.Class({
         });
 
         let enablePathInput = new Gtk.Entry();
+        enablePathInput.set_text(prefs.enablePath);
+        enablePathInput.connect('changed', () => {
+            prefs.enablePath = enablePathInput.get_text();
+        });
 
 
         let disablePathLabel = new Gtk.Label({
@@ -42,6 +78,10 @@ const PrefsWidget = new GObject.Class({
         });
 
         let disablePathInput = new Gtk.Entry();
+        disablePathInput.set_text(prefs.disablePath);
+        disablePathInput.connect('changed', () => {
+            prefs.disablePath = disablePathInput.get_text();
+        });
 
         let enableBox = new Gtk.Box();
         enableBox.set_orientation(Gtk.Orientation.HORIZONTAL);
@@ -60,6 +100,8 @@ const PrefsWidget = new GObject.Class({
         });
         saveBox.set_orientation(Gtk.Orientation.HORIZONTAL);
         saveBox.pack_end(saveBtn, false, false, 0);
+
+        saveBtn.connect('clicked', () => savePrefs());
 
         this.add(enableBox);
         this.add(disableBox);
