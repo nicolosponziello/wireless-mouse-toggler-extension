@@ -15,3 +15,6 @@ As of now, it uses 2 scripts placed inside home folder:
 + To enable: ```enable-wireless-mouse.sh```
 
 Inside this scripts place the command/s needed to control the power of the port. Use powertop to check which controls are avaiable and which command are required. 
+
+## To compile schema
+```glib-compile-schemas ./schemas```
