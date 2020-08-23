@@ -1,0 +1,17 @@
+<? xml version="1.0" encoding="UTF-8"?>
+
+<schemalist>
+    <schema id="org.gnome.shell.extensions.mouse"
+        path="/org/gnome/shell/extensions/mouse/">
+
+    <key type="s" name="enable-path">
+        <default>""</default>
+        <description>Path of the script to enable mouse</description>
+    </key>
+
+    <key type="s" name="disable-path">
+        <default>""</default>
+        <description>Path of the script to disable mouse</description>
+    </key>
+    </schema>
+</schemalist>
