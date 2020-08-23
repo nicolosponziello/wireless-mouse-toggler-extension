@@ -23,3 +23,6 @@ Inside this scripts place the command/s needed to control the power of the port.
 
 ### To get gnome shell logs
 ```journactl -f -o cat /usr/bin/gnome-shell```
+
+### Restart GNOME shell
+```alt + f2 then r```
