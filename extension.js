@@ -23,6 +23,7 @@ const Util = imports.misc.util;
 const GLib = imports.gi.GLib;
 const ByteArray = imports.byteArray;
 const Gio = imports.gi.Gio;
+const Me = imports.misc.extensionUtils.getCurrentExtension();
 
 const POWER_ON = 0;
 const POWER_OFF = 1;
@@ -32,6 +33,22 @@ var currentState;
 
 const disableArgs = ["/home/nicolo/disable-wireless-mouse.sh"];
 const enableArgs = ["/home/nicolo/enable-wireless-mouse.sh"];
+
+
+function getSettings () {
+    let GioSSS = Gio.SettingsSchemaSource;
+    let schemaSrc = GioSSS.new_from_directory(Me.dir.get_child("schemas").get_path(),
+                                                GioSSS.get_default(),
+                                                false);
+    let schemaObj = schemaSrc.lookup('org.gnome.shell.extensions.mouse', true);
+    if(!schemaObj){
+        throw new Error("schema not found");
+    }
+
+    return new Gio.Settings({settings_schema: schemaObj});
+}
+
+
 
 function _execCommand(args, callback) {
     try {
@@ -81,6 +98,19 @@ function _toggle () {
 }
 
 function init () {
+    //lookup settings
+    let settings = getSettings();
+    let enablePath = settings.get_string('enable-path').toString();
+    let disablePath = settings.get_string('disable-path').toString();
+    log(enablePath + " - " + disablePath);
+    if(enablePath != ""){
+        enableArgs[0] = enablePath;
+    }
+    if(disablePath != ""){
+        disableArgs[0] = disablePath;
+    }
+
+
     let [ok, out, err, exit] = GLib.spawn_command_line_sync('cat /sys/bus/usb/devices/1-2/power/control');
 
     let showText = "";
