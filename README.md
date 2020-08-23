@@ -16,5 +16,10 @@ As of now, it uses 2 scripts placed inside home folder:
 
 Inside this scripts place the command/s needed to control the power of the port. Use powertop to check which controls are avaiable and which command are required. 
 
-## To compile schema
+## Useful commands
+
+### To compile schema
 ```glib-compile-schemas ./schemas```
+
+### To get gnome shell logs
+```journactl -f -o cat /usr/bin/gnome-shell```
