@@ -14,6 +14,11 @@ As of now, it uses 2 scripts placed inside home folder:
 + To disable: ```disable-wireless-mouse.sh```
 + To enable: ```enable-wireless-mouse.sh```
 
+Both of these scripts need to start with
+```bash
+#!/usr/bin/bash
+```
+
 Inside this scripts place the command/s needed to control the power of the port. Use powertop to check which controls are avaiable and which command are required. 
 
 ## Useful commands
