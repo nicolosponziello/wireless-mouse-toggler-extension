@@ -1,7 +1,7 @@
 {
   "name": "Wireless Mouse Enabler",
   "description": "Enable/Disable wireless mouse dongle",
-  "uuid": "mouse@gnomeshellextension",
+  "uuid": "mouse@nicolosponziello.gmail.com",
   "shell-version": [
     "3.36"
   ],
