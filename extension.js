@@ -115,7 +115,8 @@ function init () {
 
     let showText = "";
     global.log(ByteArray.toString(out).includes('on'));
-    global.log(ByteArray.toString(out).includes('auto'))
+    global.log(ByteArray.toString(out).includes("auto"));
+    showText = "error";
     if(ByteArray.toString(out).includes('on')){
         //battery saving off
         showText = "Disable";
