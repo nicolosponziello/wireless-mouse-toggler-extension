@@ -131,8 +131,6 @@ function init () {
         style_class: "panel-button",
         can_focus: true,
         track_hover: true,
-        x_fill: true,
-        y_fill: false,
         reactive: true
     });
     panelButtonText = new St.Label({

@@ -3,7 +3,8 @@
   "description": "Enable/Disable wireless mouse dongle",
   "uuid": "mouse@nicolosponziello.gmail.com",
   "shell-version": [
-    "3.36"
+    "3.36",
+    "3.38"
   ],
   "version": 0.1
 }
