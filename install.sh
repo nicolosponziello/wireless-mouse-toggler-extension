@@ -1,3 +1,5 @@
 glib-compile-schemas ./schemas
 
-cp * ~/.local/share/gnome-shell/extensions/mouse@nicolosponziello.gmail.com
+mkdir ~/.local/share/gnome-shell/extensions/mouse@nicolosponziello.gmail.com
+
+cp -r * ~/.local/share/gnome-shell/extensions/mouse@nicolosponziello.gmail.com
