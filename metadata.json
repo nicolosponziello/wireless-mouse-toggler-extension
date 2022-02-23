@@ -4,7 +4,8 @@
   "uuid": "mouse@nicolosponziello.gmail.com",
   "shell-version": [
     "3.36",
-    "3.38"
+    "3.38",
+    "40"
   ],
   "version": 0.1
 }
